@@ -84,14 +84,17 @@ public class Player : MonoBehaviour
         float controlThrow = CrossPlatformInputManager.GetAxisRaw("Vertical");
         Vector2 climbVelocity = new Vector2(myRigidBody.velocity.x, controlThrow * climbSpeed);
         myRigidBody.velocity = climbVelocity;
+        myRigidBody.gravityScale = 0f;
+
         bool playerHasVerticalSpeed = Mathf.Abs(myRigidBody.velocity.y) > Mathf.Epsilon;
         myAnimator.SetBool("Climbing", playerHasVerticalSpeed);
 
+        /*
         if (controlThrow == 0)
         {
             myRigidBody.gravityScale = 0f;
             //myRigidBody.isKinematic = true;
-        }
+        }*/
    
         /*
         Debug.Log("touching ladder");
