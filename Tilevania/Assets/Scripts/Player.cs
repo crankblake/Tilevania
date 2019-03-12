@@ -17,7 +17,8 @@ public class Player : MonoBehaviour
     //Cached component references
     Rigidbody2D myRigidBody;
     Animator myAnimator;
-    Collider2D myCollider2D;
+    Collider2D myBodyCollider;
+    Collider2D myFeetCollider;
     float myGravity;
     
     //Message then methods
@@ -26,7 +27,8 @@ public class Player : MonoBehaviour
         myRigidBody = GetComponent<Rigidbody2D>();
         myGravity = myRigidBody.gravityScale;
         myAnimator = GetComponent<Animator>();
-        myCollider2D = GetComponent<Collider2D>();
+        myBodyCollider = GetComponent<CapsuleCollider2D>();
+        myFeetCollider = GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
@@ -43,7 +45,7 @@ public class Player : MonoBehaviour
         float controlThrow = CrossPlatformInputManager.GetAxisRaw("Horizontal"); //value is between -1 to +1
         Vector2 playerVelocity = new Vector2(controlThrow * runSpeed, myRigidBody.velocity.y);
         myRigidBody.velocity = playerVelocity;
-        //Debug.Log("Player velocity is: " + playerVelocity);
+        Debug.Log("Player velocity is: " + playerVelocity);
 
         bool playerHasHorizontalSpeed = Mathf.Abs(myRigidBody.velocity.x) > Mathf.Epsilon;
         myAnimator.SetBool("Running", playerHasHorizontalSpeed);
@@ -59,7 +61,7 @@ public class Player : MonoBehaviour
     }
     private void Jump()
     {
-        if (!myCollider2D.IsTouchingLayers(LayerMask.GetMask("Ground")))
+        if (!myFeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground")))
             return;
         if (CrossPlatformInputManager.GetButtonDown("Jump"))
         {
@@ -73,7 +75,7 @@ public class Player : MonoBehaviour
         //myRigidBody.velocity = playerVelocity;
         // Debug.Log("Player velocity is: " + playerVelocity);
 
-        if (!myCollider2D.IsTouchingLayers(LayerMask.GetMask("Climbing")))
+        if (!myBodyCollider.IsTouchingLayers(LayerMask.GetMask("Climbing")))
         {
             //myRigidBody.isKinematic = false;
             myRigidBody.gravityScale = myGravity;
