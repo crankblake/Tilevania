@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     [SerializeField] float runSpeed = 5f;
     [SerializeField] float jumpSpeed = 10f;
     [SerializeField] float climbSpeed = 5f;
-    [SerializeField] Vector2 deathKick = new Vector2(10, 100f);
+    [SerializeField] Vector2 deathKick = new Vector2(10, 25f);
 
     //State
     bool isAlive = true;
@@ -123,12 +123,16 @@ public class Player : MonoBehaviour
     }
     private void Die()
     {
-        if (myBodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemy")))
+        if (myBodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemy","Hazards")))
         {
+            deathKick = new Vector2(UnityEngine.Random.Range(-deathKick.x, deathKick.x), UnityEngine.Random.Range(-deathKick.y, deathKick.y));
+            //float deathKickx = UnityEngine.Random.Range(-deathKick.x, deathKick.x);
+            //float deathKicky = UnityEngine.Random.Range(-deathKick.y, deathKick.y);
             isAlive = false;
             myAnimator.SetTrigger("Die");
             GetComponent<Rigidbody2D>().velocity = deathKick;
         }
+
     }
 
 }
