@@ -119,5 +119,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c45c580b7a0a5f4097a6ff5ace8f7b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelLoadDelay: 1
+  levelLoadDelay: 0.25
   LevelExitSlowMoFactor: 0.2
